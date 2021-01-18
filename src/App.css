@@ -1,0 +1,22 @@
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(121, 110, 219);
+  color: white;
+  padding: 5px;
+}
+
+input {
+  border-radius: 3px;
+  border: 1px solid rgb(107, 93, 16);
+  height: 25px;
+}
+
+.main-container {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 5px solid red;
+  padding: 5px;
+}

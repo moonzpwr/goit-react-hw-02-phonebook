@@ -1,0 +1,11 @@
+.deleteBtn {
+  margin-left: 10px;
+}
+
+.contactContainer {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 450px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
