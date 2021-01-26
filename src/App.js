@@ -13,8 +13,8 @@ state = {
     filter: '',
 }
   
-  componentDidUpdate( PrevState) { 
-    if (PrevState.contacts !== this.state.contacts) {
+  componentDidUpdate( prevState) { 
+    if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
     }
   }
