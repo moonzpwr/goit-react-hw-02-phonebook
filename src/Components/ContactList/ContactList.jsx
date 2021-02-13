@@ -1,20 +1,25 @@
-import ContactItem from './ContactItem/ContactItem'
+import {TransitionGroup, CSSTransition} from 'react-transition-group'
 import propTypes from 'prop-types'
+import ContactItem from './ContactItem/ContactItem'
+import s from "./ContactList.module.css";
+
+
 
 export default function ContactList({ contacts, onRemoveContact }) { 
     return (
-        <ul>
+        <TransitionGroup component='ul' >
             {contacts.map(el => {
                 return (
-                    <ContactItem
-                        id={el.id}
-                        key={el.id}
-                        name={el.name}
-                        number={el.number}
-                        onClickRemove={onRemoveContact}/>
+                    <CSSTransition key={el.id} timeout={250} classNames={s}>
+                        <ContactItem
+                            id={el.id}
+                            name={el.name}
+                            number={el.number}
+                            onClickRemove={onRemoveContact} />
+                    </CSSTransition>
                 )
             })}
-        </ul>
+        </TransitionGroup>
     )
 }
 

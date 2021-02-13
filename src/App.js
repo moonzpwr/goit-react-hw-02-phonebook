@@ -1,8 +1,10 @@
 
 import { Component } from 'react';
+import {CSSTransition} from 'react-transition-group'
 import ContactForm from './Components/ContactForm/ContactForm'
 import ContactList from './Components/ContactList/ContactList'
 import Filter from './Components/Filter/Filter'
+import Alert from './Components/Alert/Alert'
 import { v4 as uuidv4 } from 'uuid';
 import './App.css'
 
@@ -10,7 +12,8 @@ import './App.css'
 class App extends Component {
 state = {
   contacts: [],
-    filter: '',
+  filter: '',
+  isExist: false
 }
   
   componentDidUpdate( PrevState) { 
@@ -36,9 +39,18 @@ state = {
 
     this.setState(prevStage => { 
       return prevStage.contacts.filter(el => el.name.includes(contact.name)).length > 0 ?
-        alert(`${contact.name} is already in contacts.`) :
-        { contacts: [...prevStage.contacts, contact] };    
+        // alert(`${contact.name} is already in contacts.`):
+       {isExist: true} :
+        { contacts: [...prevStage.contacts, contact], isExist: false };    
     })
+
+    setTimeout(() => {
+      this.setState({isExist: false})
+    }, 4000)
+  }
+
+  closeNotification = () => {
+    this.setState({isExist: false})
   }
 
   removeContact = contactId => {
@@ -64,13 +76,37 @@ state = {
 
  return (
    <div className="main-container">
-  <h1>Phonebook</h1>
-     <ContactForm onAddContact={this.addContact}/>
+
+      <CSSTransition
+      in={this.state.isExist}
+      unmountOnExit
+      timeout={250}
+      classNames='notification'>
+       <Alert onClickClose={this.closeNotification} />
+      </CSSTransition>
+
+
+     <CSSTransition
+      in={true}
+      appear={true}
+      timeout={500}
+      classNames='title'>
+       <h1>Phonebook</h1>
+     </CSSTransition>
+    
+    <ContactForm onAddContact={this.addContact}/>
 
      <h2>Contacts</h2>
-     {contacts.length > 1 &&
-     <Filter value={filter} oncahngeFilter={this.cahngeFilter }/>}
-     <ContactList contacts={visibleContacts} onRemoveContact={this.removeContact}/>
+     <CSSTransition
+       in={contacts.length > 1}
+       unmountOnExit
+       timeout={250}
+       classNames='filter'
+       >
+      <Filter value={filter} oncahngeFilter={this.cahngeFilter }/>
+     </CSSTransition>
+    {/* {contacts.length > 1 &&} */}
+    <ContactList contacts={visibleContacts} onRemoveContact={this.removeContact}/>
 </div>
   );
   }
